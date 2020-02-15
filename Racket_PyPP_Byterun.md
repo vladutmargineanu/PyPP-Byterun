@@ -43,33 +43,53 @@ Subsetul de instrucțiuni pe care le vom întâlni este:
 
 `Opcode	Definiţie	Descriere`
 
-`1	POP_TOP	Apelează operația de pop pe stiva de execuție.
+1	POP_TOP	Apelează operația de pop pe stiva de execuție.
+
 100	LOAD_CONST(const_i)	Face push elementului de la co_consts[const_i] pe stiva de execuție.
+
 116	LOAD_GLOBAL(func_i)	Face push elementului de la co_names[func_i] pe stiva de execuție.
+
 125	STORE_FAST(var_i)	Stocheaza TOS în co_varnames[var_i] și face pop de pe stivă.
+
 124	LOAD_FAST(var_i)	Face push elementului de la co_varnames[var_i]pe stiva de execuție
+
 22	BINARY_MODULO	Operează TOS = TOS1 % TOS
+
 23	BINARY_ADD	Operează TOS = TOS1 + TOS
+
 24	BINARY_SUBTRACT	Operează TOS = TOS1 - TOS
+
 55	INPLACE_ADD	Aceeași operație ca BINARY_ADD (eg operație în Python: x += 3)
+
 56	INPLACE_SUBTRACT	Aceeași operație ca BINARY_SUBTRACT
+
 59	INPLACE_MODULO	Aceeași operație ca BINARY_MODULO
+
 113	JUMP_ABSOLUTE(target)	Sare la instrucțiunea de pe bytecode-ul target
+
 107	COMPARE_OP(i)	Face o operatie booleană între TOS1 și TOS. Operația se afla la cmp_op[i]. Operanzii sunt scoși de pe stivă, iar 
 rezultatul operației va fi pus pe stivă.
+
 114	POP_JUMP_IF_FALSE(target)	Dacă TOS e fals, sare la target, dacă nu, se va continua cu următoarea instrucțiune - se face pop la 
 element
+
 115	POP_JUMP_IF_TRUE(target)	Dacă TOS e true, sare la target, dacă nu, se va continua cu următoarea instrucțiune - se face pop la 
 element
+
 68	GET_ITER	Implementează TOS = iter(TOS)
+
 93	FOR_ITER(delta)	Este garantat că TOS este iterator. Va face next(TOS). Dacă se întoarce o valoare, va pune valoarea pe stivă şi
 dedesubt noul iterator. Dacă iteratorul e gol, îl va scoate de pe stivă și va sari cu delta + 2 bytes
+
 131	CALL_FUNCTION(argc)	Apelează o funcție. Pe stivă se află un număr de argc argumente, urmat de numele funcției. CALL_FUNCTION le 
 va scoate de pe stivă, va apela funcția (definită în Racket) și va pune rezultatul pe stivă.
+
 120	SETUP_LOOP(delta)	O puteți ignora pentru această temă Pushează un bloc pentru o buclă pe stiva de blocuri. Blocul începe de la
 instrucțiunea curentă și are lungimea delta
+
 87	POP_BLOCK	O puteți ignora pentru această temă Apelează operația de pop pe stiva de execuție
-83	RETURN_VALUE	S-a terminat execuția funcției - nu ar trebui făcut nimic`
+
+83	RETURN_VALUE	S-a terminat execuția funcției - nu ar trebui făcut nimic
 
 `Exemple`
 
@@ -85,7 +105,7 @@ def main():
 În Python nu este nevoie să definim o funcție main ca în C, dar vom face asta pentru simplitate. Pachetul dis poate dezasambla o
 funcție:
 
-`$ python3
+$ python3
 Python 3.6.7 (default, Oct 15 2018, 11:32:17) 
 [GCC 8.2.0] on linux
 Type "help", "copyright", "credits" or "license" for more information.
@@ -103,7 +123,7 @@ Type "help", "copyright", "credits" or "license" for more information.
              18 BINARY_ADD          
              19 STORE_FAST               2 (c)
              22 LOAD_CONST               0 (None)
-             25 RETURN_VALUE        `
+             25 RETURN_VALUE       
 
 `Indecși în co-varnames`
 
@@ -123,7 +143,7 @@ Observați că, atunci când generează codul, Python înlocuiește numele varia
 Implementarea voastră nu se va schimba (noi vom folosi dicționare). Scheletul de cod ia în calcul acest lucru, trebuie doar să țineți
 minte că, atunci când vedeți 0, 1, etc… în byte-code, este vorba despre prima variabilă, a doua variabilă, etc.
 
-`LOAD_CONST și STORE_FAST
+LOAD_CONST și STORE_FAST
 LOAD_CONST 1 va pune valoarea de la co_consts[1] pe stivă:
 
 2			
@@ -132,11 +152,11 @@ STORE_FAST 0 va pune în co-varnames[0] 2 (valoarea de pe stivă) și va face po
 LOAD_CONST 2 va pune valoarea de la co_consts[2] pe stivă:
 
 3			
-STORE_FAST 1 va pune în co-varnames[1] 3 (valoarea de pe stivă) și va face pop la element.`
+STORE_FAST 1 va pune în co-varnames[1] 3 (valoarea de pe stivă) și va face pop la element.
 
 Astfel, la finalul primei secvențe: co-varnames = {0=2, 1=3, 2=None}, adică {a=2, b=3, c=None}.
 
-`LOAD_FAST
+LOAD_FAST
 LOAD_FAST                0
 LOAD_FAST                1
 LOAD_FAST pune valoarea de la co-varnames[i] în capătul stivei: LOAD_FAST 0 va pune pe stivă co-varnames[0]:
@@ -180,17 +200,17 @@ Type "help", "copyright", "credits" or "license" for more information.
  
 COMPARE_OP
 COMPARE_OP  0 (0 este numărul operației)
-COMPARE_OP face o operație booleană cu între TOS şi TOS1, apoi pune rezultatul pe stivă.`
+COMPARE_OP face o operație booleană cu între TOS şi TOS1, apoi pune rezultatul pe stivă.
 
 Operațiile posibile sunt:
 
-`>>> dis.cmp_op
+>>> dis.cmp_op
 ('<', '<=', '==', '!=', '>', '>=', 'in', 'not in', 'is', 'is not', 'exception match', 'BAD') 
-Le puteți ignora pe ultimele 4.`
+Le puteți ignora pe ultimele 4.
 
 După load-uri, stiva devine:
 
-`2	2		
+2	2		
 COMPARE_OP 0 va evalua 2 < 2 (fals) și va pune rezultatul pe stivă:
 
 False			
@@ -222,7 +242,7 @@ Exemplu #3
         >>   24 POP_BLOCK
         >>   26 LOAD_CONST               0 (None)
              28 RETURN_VALUE
->>> `
+>>> 
 După cum am menționat, SETUP_LOOP și POP_BLOCK pot fi ignorate. Folosindu-se de COMPARE_OP, urmatoarea bucată verifică condiția
 pentru while (a > 42) :
 
