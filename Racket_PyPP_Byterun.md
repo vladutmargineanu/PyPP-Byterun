@@ -439,4 +439,4 @@ Atenție scheletul a fost dezvoltat pentru Linux, s-ar putea sa aveți probleme 
 `Precizări`
 
 Sunt interzise efectele laterale de orice fel (set!, set-car! etc.).
-Arhiva pe care va trebui să o încărcați pe vmchecker trebuie să conțină fișierele opcodes.rkt și stack-machine.rkt.
+Arhiva trebuie să conțină fișierele opcodes.rkt și stack-machine.rkt.
