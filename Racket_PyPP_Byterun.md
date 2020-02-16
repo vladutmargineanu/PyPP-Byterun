@@ -2,8 +2,8 @@
 
 Din punctul de vedere al modului de execuție, un limbaj poate fi:
 
-compilat = codul sursă este transformat în cod mașină, dependent de arhitectură
-interpretat = codul sursă este executat direct de către un intepretor
+- compilat = codul sursă este transformat în cod mașină, dependent de arhitectură
+- interpretat = codul sursă este executat direct de către un intepretor
 Unele interpretoare își creează intern propriul cod binar. Acesta nu este cod mașină și nu poate fi rulat pe mașina fizică 
 (direct de către CPU), dar este rulat mai departe pe o mașină virtuală. Această metodă a fost popularizată de către Java și 
 prezintă două avantaje:
@@ -24,20 +24,18 @@ Din tot interpretorul dorim să implementăm doar un byterun minimalist în Rack
 
 `CPython`
 
-CPython folosește un model numit stack machine model: pentru a opera instrucțiuni se folosește de o stivă. Pe lângă această stivă, 
-interpretorul are nevoie să țină mai multe dicționare pentru a putea încărca valori imediate. Vom simplifica și vom folosi doar:
+CPython folosește un model numit stack machine model: pentru a opera instrucțiuni se folosește de o stivă. Pe lângă această stivă, interpretorul are nevoie să țină mai multe dicționare pentru a putea încărca valori imediate. Vom simplifica și vom folosi doar:
 
-co_varnames = asocierea dintre numele variabilelor și valorile acestora din program care se schimbă la un moment dat în timp
-co_constants = dicționar cu valorile constante
-co_names = dicționar cu nume de funcții (pentru bonus)
-Pentru bucle, CPython for se folosește de iteratori. Un iterator este un obiect pentru care poate fi apelată o funcție de next care să 
-întoarcă valoarea la pasul curent și valoarea următorului iterator. Vezi exemplu iterator in racket.
+- co_varnames = asocierea dintre numele variabilelor și valorile acestora din program care se schimbă la un moment dat în timp
+- co_constants = dicționar cu valorile constante
+- co_names = dicționar cu nume de funcții (pentru bonus)
+Pentru bucle, CPython for se folosește de iteratori. Un iterator este un obiect pentru care poate fi apelată o funcție de next care să întoarcă valoarea la pasul curent și valoarea următorului iterator. Vezi exemplu iterator in racket.
 
 `CPython ByteCode`
 
-TOS = capătul stivei (top of stack).
+- TOS = capătul stivei (top of stack).
 
-TOS1 = elementul dinainte de capătul stivei (de pe poziția top of stack - 1).
+- TOS1 = elementul dinainte de capătul stivei (de pe poziția top of stack - 1).
 
 Subsetul de instrucțiuni pe care le vom întâlni este:
 
