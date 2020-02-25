@@ -8,14 +8,12 @@ Unele interpretoare își creează intern propriul cod binar. Acesta nu este cod
 (direct de către CPU), dar este rulat mai departe pe o mașină virtuală. Această metodă a fost popularizată de către Java și 
 prezintă două avantaje:
 
-Separă conceptele de parsare și execuție, astfel codul sursă fiind mai ușor de înțeles.
+ Separă conceptele de parsare și execuție, astfel codul sursă fiind mai ușor de înțeles.
 În multe cazuri, utilizatorul final nu va modifica niciodată codul, deci se poate instala doar partea care execută codul.
 Este normal ca aceste lucruri să creeze confuzie, după cum puteți observa. Deși în teorie conceptele de interpretare/compilare sunt 
-ușor de separat, în industrie programatorii aleg să facă proiecte care le rezolvă nevoile, mai degrabă decât sa facă proiecte care 
-respectă în tocmai guideline-uri. Astfel, au apărut tot felul de interpretoare pentru tot felul de limbaje.
+ușor de separat, în industrie programatorii aleg să facă proiecte care le rezolvă nevoile, mai degrabă decât sa facă proiecte care respectă în tocmai guideline-uri. Astfel, au apărut tot felul de interpretoare pentru tot felul de limbaje.
 
-Pentru Python avem: CPython, PyPy, MicroPython, Jython, etc. Toate au fost create din nevoi diferite și nu respectă cu strictețe un 
-standard când vine vorba de modul în care codul rulează.
+Pentru Python avem: CPython, PyPy, MicroPython, Jython, etc. Toate au fost create din nevoi diferite și nu respectă cu strictețe un standard când vine vorba de modul în care codul rulează.
 
 În acestă temă vom aprofunda CPython, prima implementare de Python și cea mai folosită, care creează ceea ce se numește python byte 
 code și mai apoi este executat de ceea ce se numește byterun.
